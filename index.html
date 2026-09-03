@@ -6,36 +6,112 @@
   <title>Mishramovies7</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-    body { background-color: #0d1117; color: #e6edf3; padding: 20px; text-align: center; }
-    header { padding: 30px 10px; }
-    h1 { color: #e50914; font-size: 28px; margin-bottom: 8px; font-weight: bold; }
-    p { color: #8b949e; font-size: 15px; margin-bottom: 25px; }
-    .container { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; max-width: 800px; margin: 0 auto; }
-    .card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; overflow: hidden; width: 100%; max-width: 360px; box-shadow: 0 4px 12px rgba(0,0,0,0.4); }
-    .video-box iframe { width: 100%; height: 210px; border: none; }
-    .card-content { padding: 15px; text-align: left; }
-    .card-content h3 { font-size: 18px; margin-bottom: 6px; color: #f0f6fc; }
+    body { background-color: #0d1117; color: #fff; overflow-x: hidden; }
+
+    /* টপ ন্যাভবার */
+    .navbar { display: flex; align-items: center; justify-content: space-between; background: #161b22; padding: 12px 18px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+    .menu-btn { font-size: 22px; cursor: pointer; color: #e50914; user-select: none; }
+    .logo { font-size: 20px; font-weight: bold; color: #e50914; letter-spacing: 1px; }
+
+    /* সাইডবার মেনু ড্রয়ার */
+    .sidebar { height: 100%; width: 0; position: fixed; z-index: 200; top: 0; left: 0; background-color: #111; overflow-x: hidden; transition: 0.3s; padding-top: 60px; }
+    .sidebar a { padding: 12px 24px; text-decoration: none; font-size: 16px; color: #aaa; display: block; transition: 0.2s; }
+    .sidebar a:hover { color: #fff; background: #222; }
+    .sidebar .close-btn { position: absolute; top: 15px; right: 20px; font-size: 28px; color: #aaa; cursor: pointer; }
+
+    /* সার্চ বার */
+    .search-wrapper { padding: 15px; text-align: center; }
+    .search-input { width: 90%; max-width: 450px; padding: 10px 16px; border-radius: 20px; border: 1px solid #30363d; background: #1e252e; color: #fff; font-size: 14px; outline: none; }
+
+    /* মুভি/কার্টুন গ্রিড লিস্ট */
+    .section-title { padding: 10px 20px; font-size: 18px; color: #58a6ff; }
+    .movie-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 15px 20px 40px; max-width: 1000px; margin: 0 auto; }
+    
+    .card { background: #161b22; border: 1px solid #30363d; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+    .video-box iframe { width: 100%; height: 200px; border: none; }
+    .card-content { padding: 12px; }
+    .card-content h3 { font-size: 16px; margin-bottom: 5px; color: #f0f6fc; }
     .card-content p { font-size: 13px; color: #8b949e; }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>MISHRAMOVIES7</h1>
-    <p>Welcome to my official media & cartoon portal!</p>
+  <!-- সাইড মেনু ড্রয়ার -->
+  <div id="sideMenu" class="sidebar">
+    <span class="close-btn" onclick="toggleMenu(false)">&times;</span>
+    <a href="#">হোম (Home)</a>
+    <a href="#">কার্টুন সিরিজ</a>
+    <a href="#">অ্যানিমেশন ক্লিপস</a>
+    <a href="#">ফেভারিটস</a>
+  </div>
+
+  <!-- হেডার ও মেনু বাটন -->
+  <header class="navbar">
+    <div class="menu-btn" onclick="toggleMenu(true)">&#9776;</div>
+    <div class="logo">MISHRAMOVIES7</div>
+    <div style="width: 24px;"></div>
   </header>
 
-  <div class="container">
+  <!-- লাইভ সার্চ বার -->
+  <div class="search-wrapper">
+    <input type="text" id="searchInput" class="search-input" placeholder="ভিডিও বা কার্টুনের নাম খুঁজুন..." onkeyup="filterContent()">
+  </div>
+
+  <h2 class="section-title">সব কালেকশন</h2>
+
+  <!-- মুভি লিস্ট (গ্রিড) -->
+  <div class="movie-grid" id="movieList">
+
+    <!-- কার্ড ১ -->
     <div class="card">
       <div class="video-box">
         <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
       </div>
       <div class="card-content">
         <h3>স্পেশাল কার্টুন পর্ব ১</h3>
-        <p>অ্যানিমেশন ও এডিটেড ভিডিও কালেকশন</p>
+        <p>অ্যানিমেশন কালেকশন</p>
       </div>
     </div>
+
+    <!-- কার্ড ২ -->
+    <div class="card">
+      <div class="video-box">
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+      </div>
+      <div class="card-content">
+        <h3>স্পেশাল কার্টুন পর্ব ২</h3>
+        <p>অ্যাকশন সিরিজ</p>
+      </div>
+    </div>
+
+    <!-- কার্ড ৩ -->
+    <div class="card">
+      <div class="video-box">
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+      </div>
+      <div class="card-content">
+        <h3>টম অ্যান্ড জেরি স্পেশাল</h3>
+        <p>কমেডি ক্লিপস</p>
+      </div>
+    </div>
+
   </div>
+
+  <!-- জাভাস্ক্রিপ্ট (মেনু ও সার্চের কার্যকারিতা) -->
+  <script>
+    function toggleMenu(isOpen) {
+      document.getElementById("sideMenu").style.width = isOpen ? "220px" : "0";
+    }
+
+    function filterContent() {
+      let input = document.getElementById('searchInput').value.toLowerCase();
+      let cards = document.getElementsByClassName('card');
+      for (let i = 0; i < cards.length; i++) {
+        let title = cards[i].querySelector('h3').innerText.toLowerCase();
+        cards[i].style.display = title.includes(input) ? "block" : "none";
+      }
+    }
+  </script>
 
 </body>
 </html>
